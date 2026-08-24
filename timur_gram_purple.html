@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тимур Грам — социальная сеть</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f0ff;color:#1d1530}
+button,input{font:inherit}.app{min-height:100vh}
+.top{height:64px;background:#ffffff;border-bottom:1px solid #e5dafa;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:900;color:#7c3aed;letter-spacing:-1px}.search{margin-left:35px;width:330px;background:#f0eaff;border:0;border-radius:14px;padding:11px 15px;outline:none}
+.user{margin-left:auto;display:flex;align-items:center;gap:10px;font-weight:700}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#a855f7,#6d28d9);color:#fff;font-weight:800}
+.layout{max-width:1150px;margin:26px auto;display:grid;grid-template-columns:210px minmax(0,650px) 250px;gap:22px;padding:0 18px}
+nav{display:flex;flex-direction:column;gap:7px}nav button{border:0;background:transparent;text-align:left;padding:12px 14px;border-radius:12px;cursor:pointer;color:#606574;font-weight:700}nav button.active,nav button:hover{background:#eadcff;color:#6d28d9}
+.card{background:#fff;border:1px solid #e7def5;border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 5px 18px #6d28d912}
+.composer{display:flex;gap:12px}.composer textarea{flex:1;border:0;background:#f3edff;border-radius:14px;padding:12px;resize:none;outline:none;height:72px}.postbtn{border:0;background:#7c3aed;color:#fff;border-radius:12px;padding:10px 16px;font-weight:800;cursor:pointer}
+.posthead{display:flex;gap:10px;align-items:center}.name{font-weight:800}.handle{font-size:13px;color:#8a8e9b}.posttext{line-height:1.5;margin:14px 0}.actions{display:flex;gap:8px}.actions button{border:0;background:#f1ebfa;border-radius:10px;padding:8px 12px;cursor:pointer;color:#646878}.actions button:hover{background:#eadcff;color:#6d28d9}
+.storyrow{display:flex;gap:12px;overflow:auto}.story{min-width:72px;text-align:center;font-size:12px;color:#666}.story .avatar{width:58px;height:58px;margin:auto auto 5px;border:3px solid #fff;outline:2px solid #8b5cf6}
+.side-title{font-weight:900;margin-bottom:12px}.trend{padding:10px 0;border-bottom:1px solid #eee}.trend:last-child{border:0}.trend small{color:#8b8e9b}.follow{display:flex;align-items:center;gap:9px;margin:12px 0}.follow button{margin-left:auto;border:0;background:#eee5ff;color:#6d28d9;border-radius:10px;padding:7px 10px;font-weight:800}
+.empty{display:none;text-align:center;color:#777;padding:35px}.toast{position:fixed;right:20px;bottom:20px;background:#32145f;color:#fff;padding:12px 16px;border-radius:12px;display:none}
+@media(max-width:900px){.layout{grid-template-columns:70px minmax(0,1fr)}.right{display:none}nav button{font-size:0;text-align:center}nav button:first-letter{font-size:20px}.search{width:220px;margin-left:18px}}
+@media(max-width:600px){.top{padding:0 12px}.search{display:none}.layout{display:block;padding:0 10px;margin-top:14px}nav{display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:12px}nav button{text-align:center;font-size:12px;padding:9px}.card{border-radius:14px}.composer{display:block}.postbtn{margin-top:8px;width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <div class="logo">Тимур Грам</div>
+  <input class="search" id="search" placeholder="Поиск людей и постов…">
+  <div class="user"><div class="avatar">A</div><span>Алекс</span></div>
+</header>
+
+<div class="layout">
+  <nav>
+    <button class="active">🏠 Главная</button>
+    <button>🔎 Поиск</button>
+    <button>💬 Сообщения</button>
+    <button>🔔 Уведомления</button>
+    <button>👤 Профиль</button>
+  </nav>
+
+  <main>
+    <div class="card">
+      <div class="storyrow">
+        <div class="story"><div class="avatar">+</div>Добавить</div>
+        <div class="story"><div class="avatar">M</div>Маша</div>
+        <div class="story"><div class="avatar">K</div>Кирилл</div>
+        <div class="story"><div class="avatar">L</div>Лиза</div>
+        <div class="story"><div class="avatar">D</div>Даня</div>
+      </div>
+    </div>
+
+    <div class="card composer">
+      <div class="avatar">A</div>
+      <div style="flex:1">
+        <textarea id="postInput" placeholder="Что нового?"></textarea>
+        <button class="postbtn" id="publish">Опубликовать</button>
+      </div>
+    </div>
+
+    <div id="feed">
+      <article class="card post">
+        <div class="posthead"><div class="avatar">M</div><div><div class="name">Маша</div><div class="handle">@masha · 12 мин</div></div></div>
+        <div class="posttext">Сегодня наконец-то закончила свой новый аватар! ✨ Как вам?</div>
+        <div class="actions"><button onclick="like(this)">♡ 24</button><button>💬 6</button><button>↗ Поделиться</button></div>
+      </article>
+      <article class="card post">
+        <div class="posthead"><div class="avatar">K</div><div><div class="name">Кирилл</div><div class="handle">@kirill · 31 мин</div></div></div>
+        <div class="posttext">Кто сегодня играет в Roblox? 🎮</div>
+        <div class="actions"><button onclick="like(this)">♡ 17</button><button>💬 3</button><button>↗ Поделиться</button></div>
+      </article>
+      <article class="card post">
+        <div class="posthead"><div class="avatar">L</div><div><div class="name">Лиза</div><div class="handle">@liza · 1 ч</div></div></div>
+        <div class="posttext">Новая песня просто 🔥</div>
+        <div class="actions"><button onclick="like(this)">♡ 42</button><button>💬 11</button><button>↗ Поделиться</button></div>
+      </article>
+    </div>
+    <div class="empty" id="empty">Ничего не найдено</div>
+  </main>
+
+  <aside class="right">
+    <div class="card">
+      <div class="side-title">🔥 В тренде</div>
+      <div class="trend"><b>#Roblox</b><br><small>12,4 тыс. постов</small></div>
+      <div class="trend"><b>#Игры</b><br><small>8,1 тыс. постов</small></div>
+      <div class="trend"><b>#Аватары</b><br><small>4,7 тыс. постов</small></div>
+    </div>
+    <div class="card">
+      <div class="side-title">Кого читать</div>
+      <div class="follow"><div class="avatar">N</div><div><b>Nika</b><br><small>@nika</small></div><button>+ Читать</button></div>
+      <div class="follow"><div class="avatar">S</div><div><b>Slava</b><br><small>@slava</small></div><button>+ Читать</button></div>
+    </div>
+  </aside>
+</div>
+</div>
+<div class="toast" id="toast">Пост опубликован ✨</div>
+
+<script>
+const feed=document.getElementById('feed'), input=document.getElementById('postInput'), toast=document.getElementById('toast');
+document.getElementById('publish').onclick=()=>{
+  const text=input.value.trim(); if(!text)return;
+  const article=document.createElement('article');
+  article.className='card post';
+  article.innerHTML=`<div class="posthead"><div class="avatar">A</div><div><div class="name">Алекс</div><div class="handle">@alex · только что</div></div></div>
+  <div class="posttext"></div><div class="actions"><button onclick="like(this)">♡ 0</button><button>💬 0</button><button>↗ Поделиться</button></div>`;
+  article.querySelector('.posttext').textContent=text;
+  feed.prepend(article); input.value=''; toast.style.display='block'; setTimeout(()=>toast.style.display='none',1800);
+};
+function like(btn){let n=parseInt(btn.textContent.replace(/\D/g,''))||0;btn.textContent=(btn.textContent.includes('♥')?'♡':'♥')+' '+(btn.textContent.includes('♥')?n-1:n+1)}
+document.getElementById('search').addEventListener('input',e=>{
+ const q=e.target.value.toLowerCase();let shown=0;
+ document.querySelectorAll('.post').forEach(p=>{const ok=p.innerText.toLowerCase().includes(q);p.style.display=ok?'block':'none';if(ok)shown++});
+ document.getElementById('empty').style.display=shown?'none':'block';
+});
+</script>
+</body>
+</html>
